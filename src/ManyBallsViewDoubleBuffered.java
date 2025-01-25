@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
+
 /******************************************************************************************
  *
  * Program:	ManyBallsViewDoubleBuffered
@@ -14,9 +16,9 @@ import java.awt.image.BufferStrategy;
  *****************************************************************************************/
 
 public class ManyBallsViewDoubleBuffered extends ManyBallsView{
-	// TODO: modify this constructor to accept an array of Balls, not just one Ball.
-	public ManyBallsViewDoubleBuffered(int width, int height, Ball b) {
-		super(width, height, b);
+
+	public ManyBallsViewDoubleBuffered(int width, int height, ArrayList<Ball> balls) {
+		super(width, height, balls);
 		createBufferStrategy(2);
 	}
 

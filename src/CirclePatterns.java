@@ -38,16 +38,63 @@ public class CirclePatterns {
 
     public void makeRow(int numCircles) {
         // TODO: Write makeRow so it adds the row of circles to the ArrayList of circles.
+        int startX = FIRST_CORNER_X;
+        int startY = FIRST_CORNER_Y;
+        boolean color = true;
+        for (int i = 0; i < numCircles; i++)
+        {
+            if (color)
+            {
+                circles.add(new Circle(startX, startY, DIAMETER, Color.blue));
+            }
+            else
+            {
+                circles.add(new Circle(startX, startY, DIAMETER, Color.red));
+            }
+            color = !color;
+            startX += DIAMETER;
+        }
     }
 
     public void makeDiagonal(int numCircles) {
         // TODO: Write makeDiagonal so it adds the diagonal of circles to the ArrayList of circles.
+        int startX = FIRST_CORNER_X;
+        int startY = FIRST_CORNER_Y;
+        boolean color = false;
+        for (int i = 0; i < numCircles; i++)
+        {
+            if (color)
+            {
+                circles.add(new Circle(startX, startY, DIAMETER, Color.red));
+            }
+            else {
+                circles.add(new Circle(startX, startY, DIAMETER, Color.blue));
+            }
+            startX += DIAMETER;
+            color = !color;
+            startY += DIAMETER;
+        }
     }
 
     public void makeTarget(int numCircles) {
         // TODO: Write makeTarget so it adds the target of circles to the ArrayList of circles.
         // Key idea: the circles have to start big, then get small.
         // That way, when drawn in order, they appear on top of each other.
+        int startX = 100;
+        int startY = 300;
+        boolean color = true;
+        int radius = SMALLEST_RADIUS + CHANGE_IN_RADIUS * numCircles;
+        for (int i = 0; i < numCircles; i++) {
+            if (color) {
+                circles.add(new Circle(startX, startY, radius, Color.red));
+            } else {
+                circles.add(new Circle(startX, startY, radius, Color.black));
+            }
+            color = !color;
+            radius -= CHANGE_IN_RADIUS;
+            startX += CHANGE_IN_RADIUS / 2;
+            startY += CHANGE_IN_RADIUS / 2;
+        }
     }
 
     public void run() {

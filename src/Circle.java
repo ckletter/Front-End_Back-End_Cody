@@ -25,6 +25,7 @@ public class Circle {
     }
 
     public void draw(Graphics g) {
-        // TODO: Write the draw() method for a Circle.
+        g.setColor(color);
+        g.fillOval(x, y, diameter, diameter);
     }
 }

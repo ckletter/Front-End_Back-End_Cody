@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 /*********************************************************************************
  *
  * ManyBalls
@@ -24,13 +25,14 @@ import java.awt.event.*;
  ***********************************************************************************/
 public class ManyBalls implements ActionListener {
 						// This says "I promise to have an actionPerformed() method"
-	private Ball b;									// Our moving ball
+							// Our moving ball
 	private ManyBallsView window;                   // The front-end.
-	
+
+	private ArrayList<Ball> balls;
 	private static final int MAX_WIDTH = 600;		// Window size
 	private static final int MAX_HEIGHT = 700;		// Window size
 	private static final int TOP_OF_WINDOW = 22;	// Top of the visible window
-	
+	private static final int NUM_BALLS = 2;
 	private static final int DELAY_IN_MILLISEC = 20;  // Time delay between ball updates
 	
 	/**
@@ -47,19 +49,26 @@ public class ManyBalls implements ActionListener {
 	 * Creates one Ball object, starts up the window and starts the timer.
 	 */
 	public ManyBalls() {
-
-		// TODO: modify this to create an array of 100 random Ball objects.
-		// Initialize the Ball.
-		b = new Ball(50, 100, 3, -3, 12, Color.red);
-
+		balls = new ArrayList<Ball>();
+		for (int i = 0; i < NUM_BALLS; i++) {
+			// Initialize the Ball.
+			int dx = (int) (Math.random() * 21 - 10);
+			int dy = (int)(Math.random() * 21 - 10);
+			int startX = (int) (Math.random() * MAX_WIDTH);
+			int startY = (int) (Math.random() * MAX_HEIGHT);
+			int radius = (int) (Math.random() * 91 + 10);
+			Color c = new Color((int) (Math.random() * 256), (int) (Math.random() * 256), (int) (Math.random() * 256));
+			Ball b = new Ball(startX, startY, dx, dy, radius, c);
+			balls.add(b);
+		}
 		// Create the front-end:
 		// Version ONE: our basic view. Notice how the animation is a little jerky?
-		this.window = new ManyBallsView(MAX_WIDTH, MAX_HEIGHT, b);
+		this.window = new ManyBallsViewDoubleBuffered(MAX_WIDTH, MAX_HEIGHT, balls);
 
 		// Version TWO: using inheritance, let's make a double-buffered version of ManyBallsView.
 //		this.window = new ManyBallsViewDoubleBuffered(MAX_WIDTH, MAX_HEIGHT, b);
 
-		// Toolkit.getDefaultToolkit().sync();  // Consider this to reduce flicker
+		 Toolkit.getDefaultToolkit().sync();  // Consider this to reduce flicker
 
 		// Sets up a timer but does not start it.  Once started, the timer will go
 		//  off every DELAY_IN_MILLISEC milliseconds.  When it goes off all it does
@@ -83,10 +92,10 @@ public class ManyBalls implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent e) {		// NEW #5 !!!!!!!!!!
 
-		// TODO: modify this to call move() and bounce() on all 100 Balls.
-		// Move the ball.
-		b.move();
-		b.bounce(0, MAX_WIDTH, TOP_OF_WINDOW, MAX_HEIGHT);
+		for (Ball b : balls) {
+			b.bounce(0, MAX_WIDTH, TOP_OF_WINDOW, MAX_HEIGHT);
+			b.move();
+		}
 
 		// Update the window.
 		window.repaint();

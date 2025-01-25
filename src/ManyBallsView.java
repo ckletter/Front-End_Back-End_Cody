@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 /******************************************************************************************
  *
  * Program:	ManyBallsView
@@ -11,16 +12,15 @@ import java.awt.*;
  *****************************************************************************************/
 public class ManyBallsView extends JFrame {
 
-    private Ball b;
+    private ArrayList<Ball> balls;
     private int windowWidth;
     private int windowHeight;
 
-    public ManyBallsView(int width, int height, Ball b) {
-        // TODO: modify this constructor to accept an array of Balls, not just one Ball.
+    public ManyBallsView(int width, int height, ArrayList<Ball> balls) {
         // Initialize instance variables.
         windowWidth = width;
         windowHeight = height;
-        this.b = b;
+        this.balls = balls;
 
         // Show the window with the ball in its initial position.
         this.setTitle("MANY BALLS!");
@@ -34,8 +34,9 @@ public class ManyBallsView extends JFrame {
         g.setColor(Color.white);
         g.fillRect(0, 0, windowWidth, windowHeight);
 
-        // TODO: Modify this to call draw() on all 100 Balls.
         // Tell the ball to draw itself.
-        b.draw(g);
+        for (Ball b : balls) {
+            b.draw(g);
+        }
     }
 }
